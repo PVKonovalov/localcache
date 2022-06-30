@@ -10,15 +10,15 @@ If you are creating a fault tolerant application e.g. SCADA, your application sh
 cache := localcache.New(cachePath)
 
 if loadFromCacheOnly {
-		return cache.Load()
-	}
+	return cache.Load()
+}
   
-  profileData, err = api.GetProfileFromWebApi()
-  if err != nil {
-    return cache.Load()
-	}
+ profileData, err = api.GetProfileFromWebApi()
+ if err != nil {
+ 	return cache.Load()
+}
    
-  cache.Save(profileData)
-  return profileData
+cache.Save(profileData)
+return profileData
 ```
 Before saving, this library checks the checksum of the data and the saved file, and saves data only if the checksums differ.
