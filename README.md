@@ -6,7 +6,7 @@ If you are creating a fault tolerant application e.g. SCADA, your application sh
 
 ## How to use
 
-```
+```Go
 cache := localcache.New(cachePath)
 
 if loadFromCacheOnly {
