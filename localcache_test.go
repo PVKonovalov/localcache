@@ -11,11 +11,12 @@ package localcache
 import (
 	"errors"
 	"os"
+	"path"
 	"strings"
 	"testing"
 )
 
-const CacheFile = "./cache.json"
+const CacheFile = "cache/cache.json"
 const StringToSave1 = "[{\"elements\":[{\"equipment\":\"Equipment1\",\"name\":\"switch_truck12\",\"point_id\":2813," +
 	"\"sld_id\":10,\"type_id\":9},{\"equipment\":\"Equipment2\",\"name\":\"switch_truck12_ia\",\"point_id\":2829," +
 	"\"sld_id\":10,\"type_id\":5}],\"file\":\"/assets/sld/flisr-east-grid-2-5.svg\",\"id\":10,\"is_default\":1," +
@@ -61,6 +62,13 @@ func TestLoad1(t *testing.T) {
 	}
 }
 
+func TestUpdate1(t *testing.T) {
+	cache := New(CacheFile)
+	if err := cache.Save([]byte(StringToSave1)); err != nil {
+		t.Fatalf("Failed to save: %v\n", err)
+	}
+}
+
 func TestSave2(t *testing.T) {
 	cache := New(CacheFile)
 	if err := cache.Save([]byte(StringToSave2)); err != nil {
@@ -72,6 +80,12 @@ func TestLoad2(t *testing.T) {
 
 	t.Cleanup(func() {
 		_ = os.Remove(CacheFile)
+
+		dir, _ := path.Split(CacheFile)
+		if dir != "" {
+			_ = os.Remove(dir)
+		}
+
 	})
 
 	cache := New(CacheFile)
@@ -84,3 +98,4 @@ func TestLoad2(t *testing.T) {
 		t.Fatalf("Failed to compare\n")
 	}
 }
+
