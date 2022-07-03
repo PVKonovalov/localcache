@@ -22,3 +22,9 @@ cache.Save(profileData)
 return profileData
 ```
 Before saving, this library checks the checksum of the data and the saved file, and saves data only if the checksums differ.
+
+## Testing
+To run tests run:
+```Shell
+go test -v
+```
